@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public CircleCollider2D attackCollider;
+    [SerializeField]
+    CircleCollider2D attackCollider;
 
+    void Start(){
 
+        attackCollider = GetComponentInChildren<CircleCollider2D>();
 
-
+    }
 
     void Update()
     {
@@ -22,7 +25,4 @@ public class PlayerAttack : MonoBehaviour
     {
         attackCollider.enabled = false;
     }
-    
-
-    
 }
