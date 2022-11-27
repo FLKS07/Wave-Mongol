@@ -24,6 +24,13 @@ public class GameController : MonoBehaviour
     // Death Count
     public int mobsDeafeted;
     public TextMeshProUGUI deafetedCount;
+    //Coins
+    public TextMeshProUGUI currentCoinstxt;
+
+    [Header("Top Panel settings")]
+    public Color topPanelNormal;
+    public Color topPanelPaused;
+
 
     [Header("Other Controllers")]
     public Player playerController;
@@ -46,6 +53,7 @@ public class GameController : MonoBehaviour
         //Update the Hud
         healthBar.fillAmount = playerController.playerHealth / 10;
         deafetedCount.SetText("Killed: {}", mobsDeafeted);
+        currentCoinstxt.text = coins.ToString();
     }
 
 
@@ -62,7 +70,7 @@ public class GameController : MonoBehaviour
             isPaused = true;
             Time.timeScale = 0f;
             pausePanel.SetActive(true);
-            topPanel.SetActive(false);
+            topPanel.GetComponent<Image>().color = topPanelPaused;
         }
         else if (isPaused == true)
         {
@@ -70,6 +78,7 @@ public class GameController : MonoBehaviour
             Time.timeScale = 1f;
             pausePanel.SetActive(false);
             topPanel.SetActive(true);
+            topPanel.GetComponent<Image>().color = topPanelNormal;
         }
     }
 }

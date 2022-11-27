@@ -9,6 +9,7 @@ public class DummyController : MonoBehaviour
     public float dummyHealth;
     public float frezzeTime;
     public float damage;
+    [SerializeField] int dropsManyCoins;
 
     [Header("Dummy other data")]
     public Player playerController;
@@ -34,18 +35,21 @@ public class DummyController : MonoBehaviour
     void Update()
     {
         int randomCoin = Random.Range(0, 10);
-        if (gameController.isGameOver == false || gameController.isPaused == true)
+
+        if (gameController.isGameOver == false)
         {
             if (dummyHealth <= 0)
             {
-                if (randomCoin <= 7)
+                
+                if (randomCoin >= 7)
                 {
-                    Debug.Log("Spawned coin" + randomCoin);
+                    Debug.Log("Current range of dummy " + randomCoin);
+                    gameController.coins = +dropsManyCoins;
                 }
                 gameController.mobsDeafeted = gameController.mobsDeafeted + 1;
                 Destroy(gameObject);
             }
-            if (canMove == true)
+            if (canMove == true && gameController.isPaused == false)
             {
                 targetPosition = new Vector3(playerTransform.position.x, startTransform.position.y, 0);
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed);
@@ -83,12 +87,14 @@ public class DummyController : MonoBehaviour
     //
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (collision.gameObject.tag == "Player")
+        if (playerController.isBlocking == false)
         {
-            playerController.HurtPlayer(damage);
-        }
+            if (collision.gameObject.tag == "Player")
+            {
+                playerController.HurtPlayer(damage);
 
+            }
+        }
     }
 
     void UnFrezzeMovement()

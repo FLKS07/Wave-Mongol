@@ -9,7 +9,11 @@ public class SpawnController : MonoBehaviour
     public Transform spawnLocation1;
     public Transform spawnLocation2;
 
-    [Header("SpawnTimer")][SerializeField] float timeSpawn;
+    [Header("SpawnTimer")]
+    [SerializeField] float timeSpawn;
+    [SerializeField] float elapsedTime;
+    public float[] timeWaves;
+    public float[] timeSpawnWaves;
 
     public GameObject[] objectsToSpawn;
     bool canInstantiate;
@@ -25,6 +29,8 @@ public class SpawnController : MonoBehaviour
     void Update()
     {
         currentRandom = Random.Range(0, 10);
+        elapsedTime = elapsedTime + Time.deltaTime;
+        CountTime();
         if (currentRandom > 5)
         {
             currentSpawnPosition = spawnLocation1;
@@ -47,6 +53,7 @@ public class SpawnController : MonoBehaviour
 
         }
 
+        
     }
 
     IEnumerator spawnObject(GameObject objectSpawn)
@@ -56,4 +63,17 @@ public class SpawnController : MonoBehaviour
         canInstantiate = true;
     }
 
+    void CountTime()
+    {
+
+        int count = 0;
+        foreach (float timesWaves in timeWaves)
+        {
+            if (elapsedTime >= timesWaves)
+            {
+                count = count + 1;
+                timeSpawn = timeSpawnWaves[count -1];
+            }
+        }
+    }
 }

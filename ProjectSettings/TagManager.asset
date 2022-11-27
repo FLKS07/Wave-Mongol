@@ -7,11 +7,12 @@ TagManager:
   - Attack
   - Dummy
   - HurtPlayer
+  - BlockerPlayer
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - BlockPlayer
   - Water
   - UI
   - 

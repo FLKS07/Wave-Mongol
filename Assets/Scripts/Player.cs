@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
     public float knobackX;
     public float knobackY;
     [SerializeField] bool godMode;
+    public bool isBlocking;
+
+    [Header("Blocking")]
+    public GameObject blockingObject;
 
     [Header("Animator")]
     [SerializeField] bool isWalking;
@@ -58,23 +62,38 @@ public class Player : MonoBehaviour
         // The player movement
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Jump");
-        if (isAttacking == true)
+        if (isAttacking == true && isBlocking == true)
         {
             horizontal = 0;
             vertical = 0;
         }
 
 
-        if (isAttacking == false || isDead == false)
+        if (isAttacking == false && isDead == false && isBlocking == false)
         {
             rb2D.velocity = new Vector2(horizontal * movementSpeed, rb2D.velocity.y); // The x axis movement
         }
 
-        if (isGrounded == true && (isAttacking == false || isDead == false))
+        if (isGrounded == true && (isAttacking == false && isDead == false && isBlocking == false))
         {
             rb2D.AddForce(new Vector2(rb2D.velocity.x, vertical * jumpForce));
         }
 
+
+        // The player is blocking
+        if (isBlocking == false && (Input.GetKey(KeyCode.Mouse1)) && isAttacking == false)
+        {
+            isBlocking = true;
+            playerAnimator.SetBool("isBlocking", true);
+            blockingObject.SetActive(true);
+
+        }
+        if (isBlocking == true && (Input.GetKey(KeyCode.Mouse1) == false))
+        {
+            isBlocking = false;
+            playerAnimator.SetBool("isBlocking", false);
+            blockingObject.SetActive(false);
+        }
 
 
         // The player movement code;
@@ -142,7 +161,6 @@ public class Player : MonoBehaviour
         isAttacking = true;
         attackCollider.SetActive(true);
         playerAnimator.SetTrigger("Attack");
-        Debug.Log("The player is attacking");
     }
 
     public void FinishAttack()
@@ -153,11 +171,13 @@ public class Player : MonoBehaviour
 
     public void HurtPlayer(float damage)
     {
-        if (godMode != true)
+        if (godMode == false) // If the god mod is not active, is when the player takes damage;
         {
             playerHealth = playerHealth - damage;
         }
 
+
+        /*
         if (isLookingLeft == true)
         {
             rb2D.velocity = new Vector2(knobackX, transform.position.y) * -1;
@@ -168,10 +188,12 @@ public class Player : MonoBehaviour
             rb2D.velocity = new Vector2(knobackX, transform.position.y) * 1;
             rb2D.AddForce(new Vector2(transform.position.x, knobackY) * 1);
         }
+        */
     }
 
     public void GameOver()
     {
         gameController.gameOver();
     }
+
 }
