@@ -24,6 +24,10 @@ public class Player : MonoBehaviour
     [Header("Blocking")]
     public GameObject blockingObject;
 
+    [Header("Max boundries")]
+    public Transform BoundryA; // x -
+    public Transform BoundryB; // x +
+
     [Header("Animator")]
     [SerializeField] bool isWalking;
 
@@ -142,6 +146,9 @@ public class Player : MonoBehaviour
 
         playerAnimator.SetBool("Walking", isWalking);
 
+
+        CheckBoundries();
+
     }
 
     private void FixedUpdate()
@@ -189,6 +196,20 @@ public class Player : MonoBehaviour
             rb2D.AddForce(new Vector2(transform.position.x, knobackY) * 1);
         }
         */
+    }
+
+    void CheckBoundries()
+    {
+        if (this.transform.position.x < BoundryA.transform.position.x)
+        {
+            Debug.Log("A");
+            this.transform.position = BoundryA.transform.position;
+        }
+        else if (this.transform.position.x > BoundryB.transform.position.x)
+        {
+            Debug.Log("B");
+            this.transform.position = BoundryB.transform.position;
+        }
     }
 
     public void GameOver()
