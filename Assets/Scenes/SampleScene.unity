@@ -1367,7 +1367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7eb152c287601c0eb8fe55cd15a19e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frames: 0.84
+  frames: 0.6
   cameraOffset: {x: 0, y: 0.28, z: -0.86}
   PlayerTransform: {fileID: 634825037}
 --- !u!82 &519420034
@@ -4236,6 +4236,7 @@ MonoBehaviour:
   alreadyTurnedLeft: 0
   alreadyTurnedRigh: 0
   isAttacking: 0
+  rangeOfPlayer: 0
 --- !u!1 &1815934153
 GameObject:
   m_ObjectHideFlags: 0
