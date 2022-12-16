@@ -31,6 +31,7 @@ public class SpawnController : MonoBehaviour
         currentRandom = Random.Range(0, 10);
         elapsedTime = elapsedTime + Time.deltaTime;
         CountTime();
+        var currentObjectToSpawn = objectsToSpawn[Random.Range(0, objectsToSpawn.Length)];
         if (currentRandom > 5)
         {
             currentSpawnPosition = spawnLocation1;
@@ -39,21 +40,21 @@ public class SpawnController : MonoBehaviour
         {
             currentSpawnPosition = spawnLocation2;
         }
-        foreach (var gameObject in objectsToSpawn)
-        {
-            if (canInstantiate == true)
-            {
-                StartCoroutine("spawnObject", gameObject);
-                canInstantiate = false;
-            }
-            else
-            {
-                return;
-            }
 
+
+        if (canInstantiate == true)
+        {
+            StartCoroutine("spawnObject", currentObjectToSpawn);
+            canInstantiate = false;
+        }
+        else
+        {
+            return;
         }
 
-        
+
+
+
     }
 
     IEnumerator spawnObject(GameObject objectSpawn)
@@ -72,7 +73,7 @@ public class SpawnController : MonoBehaviour
             if (elapsedTime >= timesWaves)
             {
                 count = count + 1;
-                timeSpawn = timeSpawnWaves[count -1];
+                timeSpawn = timeSpawnWaves[count - 1];
             }
         }
     }

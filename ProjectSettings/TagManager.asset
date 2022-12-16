@@ -15,8 +15,8 @@ TagManager:
   - BlockPlayer
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - ColidePlayer
   - 
   - 
   - 

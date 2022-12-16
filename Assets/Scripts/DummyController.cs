@@ -43,7 +43,6 @@ public class DummyController : MonoBehaviour
                 
                 if (randomCoin >= 7)
                 {
-                    Debug.Log("Current range of dummy " + randomCoin);
                     gameController.coins = +dropsManyCoins;
                 }
                 gameController.mobsDeafeted = gameController.mobsDeafeted + 1;

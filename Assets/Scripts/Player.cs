@@ -24,9 +24,6 @@ public class Player : MonoBehaviour
     [Header("Blocking")]
     public GameObject blockingObject;
 
-    [Header("Max boundries")]
-    public Transform BoundryA; // x -
-    public Transform BoundryB; // x +
 
     [Header("Animator")]
     [SerializeField] bool isWalking;
@@ -40,7 +37,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool isGrounded;
 
     [Header("Flip")]
-    [SerializeField] bool isLookingLeft;
+    public bool isLookingLeft;
 
     [Header("AttackCollider")]
     public GameObject attackCollider;
@@ -147,7 +144,8 @@ public class Player : MonoBehaviour
         playerAnimator.SetBool("Walking", isWalking);
 
 
-        CheckBoundries();
+        
+        
 
     }
 
@@ -170,7 +168,7 @@ public class Player : MonoBehaviour
         playerAnimator.SetTrigger("Attack");
     }
 
-    public void FinishAttack()
+    public void FinishAttack() 
     {
         attackCollider.SetActive(false);
         isAttacking = false;
@@ -198,20 +196,7 @@ public class Player : MonoBehaviour
         */
     }
 
-    void CheckBoundries()
-    {
-        if (this.transform.position.x < BoundryA.transform.position.x)
-        {
-            Debug.Log("A");
-            this.transform.position = BoundryA.transform.position;
-        }
-        else if (this.transform.position.x > BoundryB.transform.position.x)
-        {
-            Debug.Log("B");
-            this.transform.position = BoundryB.transform.position;
-        }
-    }
-
+    
     public void GameOver()
     {
         gameController.gameOver();
