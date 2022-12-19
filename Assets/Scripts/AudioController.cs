@@ -5,13 +5,19 @@ using UnityEngine.UI;
 
 public class AudioController : MonoBehaviour
 {
+    [Header("Background Music")]
     public AudioClip[] backgroundMusics;
     [SerializeField] int currentMusic;
     [SerializeField] int currentClipLengt;
+    private float elapsedTime;
+
+    [Header("Volume")]
     public Slider volumeSlider;
     public float currentVolume;
+
+    
     private AudioSource audioSource;
-    private float elapsedTime;
+    
     void Start()
     {
         audioSource = Camera.main.GetComponent<AudioSource>();

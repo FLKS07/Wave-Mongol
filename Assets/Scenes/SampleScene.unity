@@ -4229,6 +4229,11 @@ MonoBehaviour:
   playerIsLeft: 0
   playerController: {fileID: 634825036}
   gameController: {fileID: 1767461383}
+  audioController: {fileID: 0}
+  attack: {fileID: 0}
+  hurting: {fileID: 8300000, guid: 8cd82817144e1d6cf96dbd83273d94b1, type: 3}
+  shieldAttack: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 1cf4ee11ce685ed4d8753119e5db044b, type: 3}
   playerTransform: {fileID: 634825037}
   normalColor: {r: 0, g: 0, b: 0, a: 1}
   frezzeColor: {r: 0.30980393, g: 0, b: 0, a: 1}

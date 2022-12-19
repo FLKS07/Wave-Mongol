@@ -20,6 +20,13 @@ public class BlackKnighController : MonoBehaviour
     [Header("Controllers")]
     public Player playerController;
     public GameController gameController;
+    public AudioController audioController;
+
+    [Header("Sfxs")]
+    public AudioClip attack;
+    public AudioClip hurting;
+    public AudioClip shieldAttack;
+    public AudioClip deathSound;
 
     [Header("Data to make work")]
     public Transform playerTransform;
@@ -68,6 +75,7 @@ public class BlackKnighController : MonoBehaviour
                 }
                 gameController.mobsDeafeted = gameController.mobsDeafeted + 1;
                 isDead = true; animator.SetTrigger("Die");
+                audioController.PlayClipAtPoint(deathSound, audioController.currentVolume, this.transform.position);
             }
             if (canMove == true && gameController.isPaused == false && isAttacking == false && isDead == false)
             {
@@ -90,6 +98,8 @@ public class BlackKnighController : MonoBehaviour
             currentHealth = currentHealth - playerController.attackDamage;
             canMove = false;
             spriteRenderer.color = frezzeColor;
+
+            audioController.PlayClipAtPoint(hurting, audioController.currentVolume, this.transform.position); 
             Invoke("UnFrezzeMovement", freezeTime);
         }
     }
@@ -117,27 +127,40 @@ public class BlackKnighController : MonoBehaviour
 
     void Attack(float damage)
     {
+        audioController.PlayClipAtPoint(attack, audioController.currentVolume, this.transform.position);
         isAttacking = true;
         animator.SetTrigger("Attack");
     }
 
-    void HurtPlayer()
+    void HurtPlayer() // Isto estã feito, apenas falta adicionar efeitos de sons:
     {
-        if (playerIsLeft =! playerController.isLookingLeft)
+        if (rangeOfPlayer == true)
         {
-            Debug.Log("True");
-        }
-        if (rangeOfPlayer && playerController.isBlocking == false /*(playerController.isLookingLeft == playerIsLeft && playerController.isLookingLeft) == false*/)
-        {
-            if (playerController.isBlocking && (playerIsLeft = !playerController.isLookingLeft))
+            if (playerController.isBlocking == true)
             {
-                playerController.HurtPlayer(attackDamage);
+                if (playerController.isLookingLeft != this.isLookingLeft)
+                {
+                    audioController.PlayClipAtPoint(shieldAttack, audioController.currentVolume, this.transform.position);
+                    Debug.Log("Attempted to hurtPlayer");
+                    return;
+                    
+                }
+                else if(playerController.isLookingLeft == this.isLookingLeft)
+                {
+                    Debug.Log("Hurting player with block");
+                    playerController.HurtPlayer(attackDamage);
+                    return;
+                }
             }
-            else
+            else if(playerController.isBlocking == false)
             {
+                Debug.Log("Hurted player without him blocking");
                 playerController.HurtPlayer(attackDamage);
+                return;
             }
         }
+
+
     }
 
 
